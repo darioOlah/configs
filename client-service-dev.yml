@@ -1,1 +1,3 @@
+spring:
+  profiles: dev
 message: Teste client-service yml DEV
