@@ -1,1 +1,3 @@
+spring:
+  profiles: qa
 message: Teste client-service yml QA
