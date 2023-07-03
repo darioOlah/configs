@@ -12,7 +12,29 @@ spring:
           uri: lb://COURSE-SERVICE
           predicates:
             - Path=/course/**
+        - id: catalogRoute
+          uri: lb://CATALOG-SERVICE
+          predicates:
+            - Path=/catalog-api/**
+        - id: movieRoute
+          uri: lb://MOVIE-SERVICE
+          predicates:
+            - Path=/movie-api/**
+        - id: serieRoute
+          uri: lb://SERIE-SERVICE
+          predicates:
+            - Path=/serie-api/**
           filters:
             - AddRequestHeader=course-request-header, custom-course-request-header
             - AddResponseHeader=course-response-header, custom-course-response-header
-        
+
+  resilience4j.circuitbreaker:
+  configs:
+    default:
+      recordExceptions:
+        - org.springframework.web.client.HttpServerErrorException
+        - java.util.concurrent.TimeoutException
+        - java.io.IOException
+  instances:
+    apigateway:
+      baseConfig: default
